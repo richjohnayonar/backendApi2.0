@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\carouselItems;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\carouselItemsRequest;
 
 class carouselItemsController extends Controller
 {
@@ -28,19 +29,22 @@ class carouselItemsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(carouselItemsRequest $request)
     {
-        //
-        $carouselItem = new carouselItems;
- 
-        $carouselItem->carousel_name = $request->carousel_name;
-        $carouselItem->image_path = $request->image_path;
-        $carouselItem->description = $request->description;
-        $carouselItem->user_id = $request->user_id;
-        
-        $carouselItem->save();
- 
-        // return redirect('/flights');
+
+    // $carouselItem = new carouselItems;
+
+    // $carouselItem->carousel_name = $request->input('carousel_name');
+    // $carouselItem->image_path = $request->input('image_path');
+    // $carouselItem->description = $request->input('description');
+    // $carouselItem->user_id = $request->input('user_id');
+    
+    // $carouselItem->save(); 
+     $validated = $request -> validated();
+
+     $carouselItem = carouselItems::create($validated);
+
+    return response()->json(['message' => 'Record inserted successfully'], 201);
     }
 
     /**
