@@ -31,6 +31,16 @@ class carouselItemsController extends Controller
     public function store(Request $request)
     {
         //
+        $carouselItem = new carouselItems;
+ 
+        $carouselItem->carousel_name = $request->carousel_name;
+        $carouselItem->image_path = $request->image_path;
+        $carouselItem->description = $request->description;
+        $carouselItem->user_id = $request->user_id;
+        
+        $carouselItem->save();
+ 
+        // return redirect('/flights');
     }
 
     /**
@@ -38,7 +48,9 @@ class carouselItemsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Retrieve a model by its primary key...
+        $carouselItem = carouselItems::findOrFail($id);
+        return $carouselItem;
     }
 
     /**
