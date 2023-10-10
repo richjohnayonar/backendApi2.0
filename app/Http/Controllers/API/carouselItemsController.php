@@ -19,14 +19,6 @@ class carouselItemsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(carouselItemsRequest $request)
@@ -57,20 +49,18 @@ class carouselItemsController extends Controller
         return $carouselItem;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(carouselItemsRequest $request, string $id)
     {
         //
+        $validated = $request -> validated();
+        $carouselItem = carouselItems::findOrFail($id);
+        $carouselItem -> update($validated);
+        
+        return $carouselItem;
     }
 
     /**
