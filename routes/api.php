@@ -41,8 +41,11 @@ Route::get('/user', [userController::class, 'index']);
 //get user by id
 Route::get('/user/{id}', [userController::class, 'show']);
 
+//store data
+Route::post('/user', [userController::class, 'store']);
 
-
+//update user
+Route::put('/user/{id}', [userController::class, 'update']);
 
 // delete user by id
 Route::delete('/user/{id}', [userController::class, 'destroy']);
