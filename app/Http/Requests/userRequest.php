@@ -21,11 +21,52 @@ class userRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        if( request()->routeIs('user.store')){
+            return [
             
-            'name'      =>'required|string|max:255',
-            'email'     =>'required|string|email|unique:App\Models\User,email|max:255',
-            'password'  =>'required|min:12',
-        ];
-    }
+                'name'      =>'required|string|max:255',
+                'email'     =>'required|string|email|unique:App\Models\User,email|max:255',
+                'password'  =>'required|min:12',
+            ];
+        }
+        
+
+        if(request()->routeIs('user.update')){
+            $rules = [];
+
+            if ($this->isMethod('put')) {
+                if ($this->filled('name')) {
+                    $rules['name'] = [
+                        'required',
+                        'string',
+                        'max:255',
+                        'regex:/^[a-zA-Z]*$/', // Only allow letters (uppercase and lowercase)
+                    ];
+                }
+        
+                if ($this->filled('email')) {
+                    $rules['email'] = [
+                        'required',
+                        'string',
+                        'email',
+                        'max:255',
+                        'regex:/^[^!#<>\/\\\[\]{}%^*&()]*$/',
+                        'unique:App\Models\User,email',
+                    ];
+                    
+                }
+        
+                if ($this->filled('password')) {
+                    $rules['password'] = [
+                        'required',
+                        'min:12',
+                        'regex:/^[a-zA-Z*\#@]*$/', // Allow letters (uppercase and lowercase), *, #, @
+                    ];
+                }
+            }
+        
+            return $rules;
+        }
+        }
+       
 }

@@ -45,15 +45,63 @@ class userController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function updateName(userRequest $request, string $id)
+    // {
+    //     //
+    //     $user = User::findOrFail($id);
+
+    //     $validated = $request->validated();
+
+    //     $user->name = $validated['name'];
+
+    //     $user->save();
+
+    //     return $user;
+    // }
+
+       /**
+     * Update the specified resource in storage.
+     */
+    // public function updateEmail(userRequest $request, string $id)
+    // {
+    //     //
+    //     $user = User::findOrFail($id);
+
+    //     $validated = $request->validated();
+
+    //     $user->email = $validated['email'];
+
+    //     $user->save();
+
+    //     return $user;
+    // }
+
+
+     /**
+     * Update the specified resource in storage.
+     */
     public function update(userRequest $request, string $id)
-    {
-        //
-        $validated = $request -> validated();
-        $user = User::findOrFail($id);
-        $user -> update($validated);
-        
-        return $user;
+{
+    $user = User::findOrFail($id);
+
+    $validated = $request->validated();
+
+    if (isset($validated['name'])) {
+        $user->name = $validated['name'];
     }
+
+    if (isset($validated['email'])) {
+        $user->email = $validated['email'];
+    }
+
+    if (isset($validated['password'])) {
+        $user->password = Hash::make($validated['password']);
+    }
+
+    $user->save();
+
+    return $user;
+}
 
     /**
      * Remove the specified resource from storage.

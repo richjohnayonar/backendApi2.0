@@ -42,10 +42,14 @@ Route::get('/user', [userController::class, 'index']);
 Route::get('/user/{id}', [userController::class, 'show']);
 
 //store data
-Route::post('/user', [userController::class, 'store']);
+Route::post('/user', [userController::class, 'store'])->name('user.store');
 
-//update user
-Route::put('/user/{id}', [userController::class, 'update']);
+//update name of user
+Route::put('/user/{id}', [userController::class, 'update'])->name('user.update');
+
+//update email of user
+// Route::put('/user/{id}', [userController::class, 'updateEmail'])->name('user.email');
+
 
 // delete user by id
 Route::delete('/user/{id}', [userController::class, 'destroy']);
