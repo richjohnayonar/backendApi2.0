@@ -29,8 +29,14 @@ class userRequest extends FormRequest
                 'password'  =>'required|min:12',
             ];
         }
-        
 
+        if( request()->routeIs('user.login')){
+            return [
+                'email'     =>'required|string|email|max:255',
+                'password'  =>'required|min:12',
+            ];
+        }
+        
         if(request()->routeIs('user.update')){
             $rules = [];
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\userController;
 use App\Http\Controllers\API\carouselItemsController;
+use App\Http\Controllers\API\authController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,34 +23,49 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/carousel', [carouselItemsController::class, 'index']);
-
-Route::get('/carousel/{id}', [carouselItemsController::class, 'show']);
-
-Route::post('/carousel', [carouselItemsController::class, 'store']);
-
-Route::put('/carousel/{id}', [carouselItemsController::class, 'update']);
-
-Route::delete('/carousel/{id}', [carouselItemsController::class, 'destroy']);
+//login/logout auth
+Route::controller(authController::class)->group(function () { 
+    Route::post('/login','login' )->name('user.login');
+    Route::get('/logout','logout');
+});
 
 
-//user routes
 
-//get all user
-Route::get('/user', [userController::class, 'index']);
+//carousel item controller
+Route::controller(carouselItemsController::class)->group(function () { 
 
-//get user by id
-Route::get('/user/{id}', [userController::class, 'show']);
+    Route::get('/carousel', 'index');
 
-//store data
-Route::post('/user', [userController::class, 'store'])->name('user.store');
+    Route::get('/carousel/{id}', 'show');
+    
+    Route::post('/carousel', 'store');
+    
+    Route::put('/carousel/{id}', 'update');
+    
+    Route::delete('/carousel/{id}', 'destroy');
+    
+});
 
-//update name of user
-Route::put('/user/{id}', [userController::class, 'update'])->name('user.update');
-
-//update email of user
-// Route::put('/user/{id}', [userController::class, 'updateEmail'])->name('user.email');
 
 
-// delete user by id
-Route::delete('/user/{id}', [userController::class, 'destroy']);
+
+//user routes controller
+// Route::controller(userController::class)->group(function () { 
+// // get all user
+// Route::get('/user',  'index');
+
+// // get user by id
+// Route::get('/user/{id}', 'show');
+
+// // store data
+// Route::post('/user', 'store')->name('user.store');
+
+// // update userW
+// Route::put('/user/{id}', 'update')->name('user.update');
+
+// // delete user by id
+// Route::delete('/user/{id}', 'destroy');
+
+// });
+
+
